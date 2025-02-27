@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
-const googlehome = require('google-home-notifier');
+const GoogleHomePlayer = require('google-home-player');
 const client = new Client({ 
   intents: [
     GatewayIntentBits.Guilds,
@@ -11,9 +11,7 @@ const client = new Client({
 
 // Google Nest Hubの設定
 const nestHubIP = process.env.NEST_HUB_IP || '192.168.1.x'; // あなたのGoogle Nest HubのIPアドレス
-const language = 'ja'; // 日本語
-googlehome.device('Google-Nest-Hub', language);
-googlehome.ip(nestHubIP);
+const googleHome = new GoogleHomePlayer(nestHubIP);
 
 // Discordボットのセットアップ
 client.once('ready', () => {
@@ -32,10 +30,13 @@ client.on('messageCreate', async (message) => {
   const speakText = `${message.author.username}さんからのメッセージ: ${message.content}`;
   
   // Google Nest Hubで読み上げ
-  googlehome.notify(speakText, (res) => {
-    console.log(`読み上げ: ${speakText}`);
-    console.log(res);
-  });
+  googleHome.speak(speakText)
+    .then(() => {
+      console.log(`読み上げ: ${speakText}`);
+    })
+    .catch((err) => {
+      console.error('エラーが発生しました:', err);
+    });
 });
 
 // ボットログイン

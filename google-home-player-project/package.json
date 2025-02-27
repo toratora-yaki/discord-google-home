@@ -1,0 +1,15 @@
+{
+  "name": "google-home-player-project",
+  "version": "1.0.0",
+  "description": "A project to play audio on Google Home devices using google-home-player.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "google-home-player": "^3.0.0",
+    "dotenv": "^10.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
