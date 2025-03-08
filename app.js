@@ -30,7 +30,7 @@ client.on('messageCreate', async (message) => {
   const speakText = `${message.author.username}さんからのメッセージ: ${message.content}`;
   
   // Google Nest Hubで読み上げ
-  googleHome.speak(speakText)
+  googleHome.say(speakText)
     .then(() => {
       console.log(`読み上げ: ${speakText}`);
     })
